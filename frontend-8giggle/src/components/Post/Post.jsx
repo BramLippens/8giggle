@@ -39,10 +39,10 @@ export const Post = ({
         <div className="col-span-3">
           {categories.map((c) => (
             <span
-              key={c}
+              key={c.id}
               className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
             >
-              {c}
+              {c.name}
             </span>
           ))}
         </div>
