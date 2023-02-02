@@ -6,7 +6,7 @@ export const CategoryList = () => {
   const [categories, setCategories] = useState(CATEGORY_DATA);
   return (
     <div className="px-2">
-      <div className="flex -mx-2">
+      <div className="flex -mx-2 mb-4">
         {categories.map((category) => (
           <div className="px-2">
             <Category key={category.id} name={category.name} />
