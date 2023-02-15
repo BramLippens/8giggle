@@ -1,0 +1,5 @@
+- express is an Express application, which is necessary for our Express server
+- ejs is a templating engine that generates HTML
+- mongoose is a package that connects our application to our MongoDB
+- bycrptjs handles encrypting passwords
+- passportand passport-local handle authentication
