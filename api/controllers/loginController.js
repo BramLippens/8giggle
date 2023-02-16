@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const passport = require("passport");
 
 const registerUser = (req, res) => {
   const { username, password, confirm: confirm, email } = req.body;
@@ -41,7 +42,7 @@ const registerUser = (req, res) => {
             newUser
               .save()
               .then((user) => {
-                res.redirect("/");
+                res.redirect("/login");
               })
               .catch((err) => console.log(err));
           });
@@ -65,7 +66,7 @@ const loginUser = (req, res) => {
       successRedirect: "/dashboard",
       failureRedirect: "/login",
       failureFlash: true,
-    })(req, res, next);
+    })(req, res);
   }
 };
 

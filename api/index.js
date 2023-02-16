@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
+const session = require("express-session");
 
 dotenv.config();
 const port = process.env.PORT || 3000;
@@ -23,6 +24,13 @@ loginCheck(passport);
 
 // Bodyparser
 app.use(express.urlencoded({ extended: false }));
+app.use(
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
 
 // Authentication/Session
 app.use(passport.initialize());
