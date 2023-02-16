@@ -1,21 +1,33 @@
 const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
-const mongoose = require("mongoose");
 
 dotenv.config();
+const port = process.env.PORT || 3000;
 
+// views
+app.set("view engine", "ejs");
+
+// database
+const mongoose = require("mongoose");
 const database = process.env.MONGOLAB_URI;
 mongoose
   .connect(database, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.log(err));
 
-app.set("view engine", "ejs");
+// Passport config
+const passport = require("passport");
+const { loginCheck } = require("./auth/passport");
+loginCheck(passport);
 
-const port = process.env.PORT || 3000;
-
+// Bodyparser
 app.use(express.urlencoded({ extended: false }));
+
+// Authentication/Session
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Routes
 app.use("/", require("./routes/login"));
 
