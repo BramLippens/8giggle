@@ -15,7 +15,8 @@ app.set("view engine", "ejs");
 
 const port = process.env.PORT || 3000;
 
+app.use(express.urlencoded({ extended: false }));
 // Routes
-app.get("/", require("./routes/login"));
+app.use("/", require("./routes/login"));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

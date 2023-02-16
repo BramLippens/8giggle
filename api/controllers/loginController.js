@@ -1,20 +1,32 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
-const registerView = (req, res) => {
-  const { username, password, password2, email } = req.body;
+const registerUser = (req, res) => {
+  const { username, password, confirm: confirm, email } = req.body;
   let errors = [];
 
-  if (!username || !password || !password2 || !email) {
-    errors.push({ msg: "Please fill in all fields" });
+  if (!username || !password || !confirm || !email) {
+    // if any of the fields are empty log what was empty
+    if (!username) {
+      console.error({ msg: "username is empty" });
+    }
+    if (!password) {
+      console.error({ msg: "password is empty" });
+    }
+    if (!confirm) {
+      console.error({ msg: "password2 is empty" });
+    }
+    if (!email) {
+      console.error({ msg: "email is empty" });
+    }
   }
 
-  if (password !== password2) {
+  if (password !== confirm) {
     errors.push({ msg: "Passwords do not match" });
   } else {
     User.findOne({ email: email, username: username }).then((user) => {
       if (user) {
-        errors.push({ msg: "email already exists" });
+        console.error({ msg: "email already exists" });
       } else {
         const newUser = new User({
           username,
@@ -38,7 +50,10 @@ const registerView = (req, res) => {
     });
   }
   // log errors
-  console.log(errors);
+};
+
+const registerView = (req, res) => {
+  res.render("register", {});
 };
 
 const loginView = (req, res) => {
@@ -48,4 +63,5 @@ const loginView = (req, res) => {
 module.exports = {
   registerView,
   loginView,
+  registerUser,
 };
