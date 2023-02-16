@@ -52,6 +52,23 @@ const registerUser = (req, res) => {
   // log errors
 };
 
+const loginUser = (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    console.error({ msg: "email or password is empty" });
+    res.render("login", {
+      email,
+      password,
+    });
+  } else {
+    passport.authenticate("local", {
+      successRedirect: "/dashboard",
+      failureRedirect: "/login",
+      failureFlash: true,
+    })(req, res, next);
+  }
+};
+
 const registerView = (req, res) => {
   res.render("register", {});
 };
@@ -64,4 +81,5 @@ module.exports = {
   registerView,
   loginView,
   registerUser,
+  loginUser,
 };
